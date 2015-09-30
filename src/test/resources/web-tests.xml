@@ -24,7 +24,7 @@
 
     <!-- runs all targets -->
     <target name="run-all-tests"
-        depends="Login,Logout,PasswordHint,Signup,UserTests,StaticPages,WebServices,DWR,FileUpload"
+        depends="Login,Logout,PasswordHint,Signup,UserTests,StaticPages,WebServices,DWR,FileUpload,PersonTests"
         description="Call and executes all test cases (targets)"/>
 
     <!-- runs user-related tests -->
@@ -254,4 +254,91 @@
             </steps>
         </webtest>
     </target>
+	
+	<!-- runs person-related tests -->
+	<target name="PersonTests"
+	    depends="SearchPersons,EditPerson,SavePerson,AddPerson,DeletePerson"
+	    description="Call and executes all person test cases (targets)">
+	    <echo>Successfully ran all Person UI tests!</echo>
+	</target>
+	 
+	<!-- Verify the persons list screen displays without errors -->
+	<target name="SearchPersons" description="Tests search for and displaying all persons">
+	    <webtest name="searchPersons">
+	        &config;
+	        <steps>
+	            &login;
+	            <invoke description="click View Person link" url="/persons"/>
+	            <verifytitle description="we should see the personList title"
+	                text=".*${personList.title}.*" regex="true"/>
+	        </steps>
+	    </webtest>
+	</target>
+	 
+	<!-- Verify the edit person screen displays without errors -->
+	<target name="EditPerson" description="Tests editing an existing Person's information">
+	    <webtest name="editPerson">
+	        &config;
+	        <steps>
+	            &login;
+	            <invoke description="View Person List" url="/persons"/>
+	            <clicklink label="1" description="Click edit link"/>
+	            <verifytitle description="we should see the personDetail title"
+	                text=".*${personDetail.title}.*" regex="true"/>
+	        </steps>
+	    </webtest>
+	</target>
+	 
+	<!-- Edit a person and then save -->
+	<target name="SavePerson" description="Tests editing and saving a person">
+	    <webtest name="savePerson">
+	        &config;
+	        <steps>
+	            &login;
+	            <invoke description="click Edit Person link" url="/personform?id=1"/>
+	            <verifytitle description="we should see the personDetail title"
+	                text=".*${personDetail.title}.*" regex="true"/>
+	 
+	            <clickbutton label="${button.save}" description="Click Save"/>
+	            <verifytitle description="Page re-appears if save successful"
+	                text=".*${personDetail.title}.*" regex="true"/>
+	            <verifytext description="verify success message" text="${person.updated}"/>
+	        </steps>
+	    </webtest>
+	</target>
+	 
+	<!-- Add a new Person -->
+	<target name="AddPerson" description="Adds a new Person">
+	    <webtest name="addPerson">
+	        &config;
+	        <steps>
+	            &login;
+	            <invoke description="click Add Button" url="/personform"/>
+	            <verifytitle description="we should see the personDetail title"
+	                text=".*${personDetail.title}.*" regex="true"/>
+	 
+	            <setinputfield description="set firstName" name="firstName" value="Jack"/>
+	            <setinputfield description="set lastName" name="lastName" value="Raible"/>
+	                 
+	            <clickbutton label="${button.save}" description="Click button 'Save'"/>
+	            <verifytitle description="Person List appears if save successful"
+	                text=".*${personList.title}.*" regex="true"/>
+	            <verifytext description="verify success message" text="${person.added}"/>
+	        </steps>
+	    </webtest>
+	</target>
+	 
+	<!-- Delete existing person -->
+	<target name="DeletePerson" description="Deletes existing Person">
+	    <webtest name="deletePerson">
+	        &config;
+	        <steps>
+	            &login;
+	            <invoke description="click Edit Person link" url="/personform?id=2"/>
+	            <clickbutton label="${button.delete}" description="Click button 'Delete'"/>
+	            <verifytitle description="display Person List" text=".*${personList.title}.*" regex="true"/>
+	            <verifytext description="verify success message" text="${person.deleted}"/>
+	        </steps>
+	    </webtest>
+	</target>	
 </project>
