@@ -46,12 +46,4 @@
 		<constructor-arg value="com.cxic.model.Person" />
 	</bean>
 	
-	<bean id="personManager" class="com.cxic.service.impl.GenericManagerImpl">
-		<constructor-arg>
-			<bean class="com.cxic.dao.hibernate.GenericDaoHibernate"
-				autowire="byType">
-				<constructor-arg value="com.cxic.model.Person" />
-			</bean>
-		</constructor-arg>
-	</bean>
 </beans>
