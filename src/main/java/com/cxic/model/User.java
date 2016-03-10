@@ -130,8 +130,7 @@ public class User extends BaseObject implements Serializable, UserDetails {
         return lastName;
     }
 
-//    @Column(nullable = false, unique = true)
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @Field
     public String getEmail() {
         return email;

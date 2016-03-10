@@ -8,6 +8,5 @@
     <session-factory>
         <mapping class="com.cxic.model.User"/>
         <mapping class="com.cxic.model.Role"/>
-		<mapping class="com.cxic.model.Person"/>
     </session-factory>
 </hibernate-configuration>
