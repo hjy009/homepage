@@ -55,7 +55,7 @@ public class SignupControllerTest extends BaseControllerTestCase {
                 .param("confirmPassword", "Password1")
                 .param("firstName", "First")
                 .param("lastName", "Last")
-                .param("email", "self-registered@raibledesigns.com")
+                .param("email", "test@cxic.com")
                 .param("website", "http://raibledesigns.com")
                 .param("passwordHint", "Password is one with you.")
         )

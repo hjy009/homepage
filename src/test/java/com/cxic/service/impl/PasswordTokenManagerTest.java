@@ -77,13 +77,14 @@ public class PasswordTokenManagerTest {
     @Before
     public void before() throws Exception {
         smtpPort = (new Random().nextInt(9999 - 1000) + 1000);
+//        smtpPort = 25;
 
         // create new user so conflicts don't occur with other tests
         User user = new User("token-test");
         user.setPassword("foobar");
         user.setFirstName("Token");
         user.setLastName("Test");
-        user.setEmail("token-test@appfuse.org");
+        user.setEmail("test@cxic.com");
         userManager.saveUser(user);
     }
 
